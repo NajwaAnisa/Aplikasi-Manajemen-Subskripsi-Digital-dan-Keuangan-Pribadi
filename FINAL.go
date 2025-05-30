@@ -24,7 +24,7 @@ type waktu struct {
 	tanggal, bulan, tahun int
 }
 
-// Fungsi untuk menambahkan data langganan baru ke dalam array
+// Prosedur untuk menambahkan data langganan baru ke dalam array
 func tambahLangganan(A *tabPelanggan, n *int) {
 	// Meminta input data langganan secara berurutan dari pengguna
 	fmt.Print("Nama Langganan: ")
@@ -55,7 +55,7 @@ func tambahLangganan(A *tabPelanggan, n *int) {
 	fmt.Println(" - - - - - - - - - - - - ")
 }
 
-// Fungsi untuk menampilkan seluruh data langganan yang tersimpan
+// Prosedur untuk menampilkan seluruh data langganan yang tersimpan
 func tampilkanLangganan(A *tabPelanggan, n *int) {
 	// Mulai dari indeks 1 sampai jumlah langganan (karena indeks 0 belum dipakai)
 	for i := 1; i < *n; i++ {
@@ -77,7 +77,7 @@ func tampilkanLangganan(A *tabPelanggan, n *int) {
 	}
 }
 
-// Fungsi untuk mengubah data langganan tertentu berdasarkan indeks yang diminta
+// Prosedur untuk mengubah data langganan tertentu berdasarkan indeks yang diminta
 func ubahLangganan(A *tabPelanggan, n *int) {
 	var i int
 	fmt.Print("Langganan ke:")
@@ -101,7 +101,7 @@ func ubahLangganan(A *tabPelanggan, n *int) {
 	}
 }
 
-// Fungsi untuk menghapus data langganan berdasarkan indeks yang diminta
+// Prosedur untuk menghapus data langganan berdasarkan indeks yang diminta
 func hapusLangganan(A *tabPelanggan, n *int) {
 	var i, hapus int
 	fmt.Println(" - - - - - - - - - - - - ")
@@ -118,7 +118,7 @@ func hapusLangganan(A *tabPelanggan, n *int) {
 	fmt.Println(" - - - - - - - - - - - - ")
 }
 
-// Fungsi untuk mencari langganan berdasarkan kategori secara sequential (berurutan)
+// Prosedur untuk mencari langganan berdasarkan kategori secara sequential (berurutan)
 func carikategori(A *tabPelanggan, n *int, x string) {
 	var i int
 	var ditemukan bool = false
@@ -149,7 +149,7 @@ func carikategori(A *tabPelanggan, n *int, x string) {
 		fmt.Println(" - - - - - - - - - - - - ")
 }
 
-// Fungsi pengurutan data langganan berdasarkan nama secara ascending menggunakan metode insertion sort
+// Prosedur pengurutan data langganan berdasarkan nama secara ascending menggunakan metode insertion sort
 func sortnama(A *tabPelanggan, n int) {
 	var pass, i int
 	var temp langganan
@@ -167,7 +167,7 @@ func sortnama(A *tabPelanggan, n int) {
 	}
 }
 
-// Fungsi pencarian nama langganan menggunakan binary search setelah data diurutkan
+// Prosedur pencarian nama langganan menggunakan binary search setelah data diurutkan
 func binaryUrutkannama(A *tabPelanggan, n int) {
 	var kiri, kanan, tengah, idx int
 	var x string
@@ -211,7 +211,7 @@ func binaryUrutkannama(A *tabPelanggan, n int) {
 		fmt.Println(" - - - - - - - - - - - - ")
 }
 
-// Fungsi pengurutan data langganan berdasarkan biaya langganan secara ascending menggunakan selection sort
+// Prosedur pengurutan data langganan berdasarkan biaya langganan secara ascending menggunakan selection sort
 func urutkanBiaya(A *tabPelanggan, n int) {
 	var pass, i, idx int
 	var temp langganan
@@ -230,7 +230,7 @@ func urutkanBiaya(A *tabPelanggan, n int) {
 	}
 }
 
-// Fungsi untuk menghitung total biaya bulanan dari semua langganan yang statusnya aktif
+// Prosedur untuk menghitung total biaya bulanan dari semua langganan yang statusnya aktif
 func biayaBulanan(A *tabPelanggan, n *int) {
 	var i int
 	var jumlah float64 = 0
@@ -261,7 +261,7 @@ func biayaTermahal(A tabPelanggan, n int) int {
 	return max
 }
 
-// Fungsi untuk memperbarui tanggal jatuh tempo dengan menambah satu bulan ke tanggal tenggat
+// Prosedur untuk memperbarui tanggal jatuh tempo dengan menambah satu bulan ke tanggal tenggat
 func jatuhTempo(A *tabPelanggan, n int) {
 	var i int
 	for i = 0; i < n; i++ {
@@ -273,7 +273,7 @@ func jatuhTempo(A *tabPelanggan, n int) {
 	}
 }
 
-// Fungsi memberikan rekomendasi hemat dengan menyarankan langganan termahal untuk dihentikan
+// Prosedur memberikan rekomendasi hemat dengan menyarankan langganan termahal untuk dihentikan
 func rekomendasiHemat(A *tabPelanggan, n int) {
 	var total float64 = 0
 	var i, max int
@@ -319,8 +319,7 @@ func main() {
 		fmt.Println("8. Urutkan Biaya") // selection sort
 		fmt.Println("9. Cek Jatuh Tempo")
 		fmt.Println("10. Total Biaya Bulanan")
-		fmt.Println("11. Biaya Termahal")
-		fmt.Println("12. Rekomendasi langganan hemat")
+		fmt.Println("11. Rekomendasi langganan hemat")
 		fmt.Println("0. Keluar")
 		fmt.Println(" - - - - - -  M E N U - - - - - - - ")
 		fmt.Print("Pilih menu: ")
@@ -351,13 +350,6 @@ func main() {
 		} else if pilihan == 10 {
 			biayaBulanan(&p, &n)            // Menghitung total biaya langganan aktif per bulan
 		} else if pilihan == 11 {
-			max := biayaTermahal(p, n)       // Mencari langganan dengan biaya termahal
-			fmt.Println(" - - - - - - - - - - - - ")
-			fmt.Println("Langganan ke-", max)
-			fmt.Println("Nama: ", p[max].nama)
-			fmt.Println("Biaya: ", p[max].biaya_langganan)
-			fmt.Println(" - - - - - - - - - - - - ")
-		} else if pilihan == 12 {
 			rekomendasiHemat(&p, n)         // Memberikan rekomendasi langganan mana yang bisa dihentikan untuk menghemat biaya
 		} else if pilihan == 0 {
 			fmt.Println("Keluar dari program") // Pesan keluar program
@@ -366,4 +358,6 @@ func main() {
 		}
 	}
 }
+
+
 
