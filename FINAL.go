@@ -14,7 +14,6 @@ type langganan struct {
 	kategori        string  // Kategori layanan langganan
 	biaya_langganan float64 // Biaya yang harus dibayar untuk langganan
 	tanggal_bayar   waktu   // Tanggal saat pembayaran dilakukan
-	tenggat         waktu   // Batas waktu pembayaran berikutnya (jatuh tempo)
 	metode          string  // Metode pembayaran (misal: transfer, kartu, dll)
 	status          string  // Status langganan (aktif, nonaktif, dll)
 }
@@ -35,11 +34,6 @@ func tambahLangganan(A *tabPelanggan, n *int) {
 	fmt.Scan(&A[*n].biaya_langganan)
 	fmt.Print("Tanggal bayar: ")
 	fmt.Scan(&A[*n].tanggal_bayar.tanggal, &A[*n].tanggal_bayar.bulan, &A[*n].tanggal_bayar.tahun)
-	
-	// Inisialisasi tanggal tenggat sama dengan tanggal bayar (jatuh tempo awal)
-	A[*n].tenggat.tanggal = A[*n].tanggal_bayar.tanggal
-	A[*n].tenggat.bulan = A[*n].tanggal_bayar.bulan
-	A[*n].tenggat.tahun = A[*n].tanggal_bayar.tahun
 	
 	// Membaca metode pembayaran, dibuat demikian agar Metode dan Status terdapat pada line berbeda
 	fmt.Print("Metode: ")
@@ -64,13 +58,7 @@ func tampilkanLangganan(A *tabPelanggan, n *int) {
 		fmt.Println("1. Nama:", A[i].nama)
 		fmt.Println("2. Kategori:", A[i].kategori)
 		fmt.Println("3. Biaya Langganan:", A[i].biaya_langganan)
-		fmt.Println("3. Tanggal Bayar:", A[i].tanggal_bayar.tanggal, A[i].tanggal_bayar.bulan, A[i].tanggal_bayar.tahun)
-		fmt.Print("4. Jatuh tempo: ")
-		// Tampilkan tanggal jatuh tempo jika bulan jatuh tempo berbeda dengan bulan tanggal bayar
-		if A[i].tanggal_bayar.bulan != A[i].tenggat.bulan {
-			fmt.Print(A[i].tenggat.tanggal, A[i].tenggat.bulan, A[i].tenggat.tahun)
-		}
-		fmt.Println()
+		fmt.Println("4. Tanggal Bayar:",A[i].tanggal_bayar.tanggal, A[i].tanggal_bayar.bulan, A[i].tanggal_bayar.tahun)
 		fmt.Println("5. Metode: ", A[i].metode)
 		fmt.Println("6. Status: ", A[i].status)
 		fmt.Println(" - - - - - - - - - - - - ")
@@ -92,7 +80,7 @@ func ubahLangganan(A *tabPelanggan, n *int) {
 		fmt.Print("Biaya Langganan baru: ")
 		fmt.Scan(&A[i].biaya_langganan)
 		fmt.Print("Tanggal bayar baru: ")
-		fmt.Scan(&A[i].tenggat.tanggal, &A[i].tenggat.bulan, &A[i].tenggat.tahun)
+		fmt.Scan(&A[i].tanggal_bayar.tanggal, &A[i].tanggal_bayar.bulan, &A[i].tanggal_bayar.tahun)
 		fmt.Print("Metode baru: ")
 		fmt.Scan(&A[i].metode)
 		fmt.Print("Status baru: ")
@@ -135,7 +123,7 @@ func carikategori(A *tabPelanggan, n *int, x string) {
 			fmt.Println("1. Nama: ", A[i].nama)
 			fmt.Println("2. Kategori: ", A[i].kategori)
 			fmt.Println("3. Biaya Langganan: ", A[i].biaya_langganan)
-			fmt.Println("4. Tanggal Bayar: ", A[i].tenggat.tanggal, A[i].tenggat.bulan, A[i].tenggat.tahun)
+			fmt.Println("4. Tanggal Bayar: ", A[i].tanggal_bayar.tanggal, A[i].tanggal_bayar.bulan, A[i].tanggal_bayar.tahun)
 			fmt.Println("5. Metode: ", A[i].metode)
 			fmt.Println("6. Status: ", A[i].status)
 			fmt.Println(" - - - - - - - - - - - - ")
@@ -200,7 +188,7 @@ func binaryUrutkannama(A *tabPelanggan, n int) {
 		fmt.Println("1. Nama: ", A[idx].nama)
 		fmt.Println("2. Kategori:", A[idx].kategori)
 		fmt.Println("3. Biaya Langganan: ", A[idx].biaya_langganan)
-		fmt.Println("4. Tanggal Bayar: ", A[idx].tenggat)
+		fmt.Println("4. Tanggal Bayar: ", A[idx].tanggal_bayar.tanggal, A[idx].tanggal_bayar.bulan, A[idx].tanggal_bayar.tahun)
 		fmt.Println("5. Metode: ", A[idx].metode)
 		fmt.Println("6. Status: ", A[idx].status)
 		fmt.Println("---")
@@ -246,6 +234,26 @@ func biayaBulanan(A *tabPelanggan, n *int) {
 	fmt.Println(" - - - - - - - - - - - - ")
 }
 
+// Prosedur untuk memperbarui tanggal jatuh tempo dengan menambah satu bulan dari tanggal bayar bulan 
+func tampilkanTenggat(A *tabPelanggan, n *int){
+	var i int 
+	for i = 1; i < *n; i++ {
+		fmt.Println(" - - - - - - - - - - - - ")
+		fmt.Println("Langganan", i)
+		fmt.Println("1. Nama:", A[i].nama)
+		fmt.Println("2. Kategori:", A[i].kategori)
+		fmt.Println("3. Biaya Langganan:", A[i].biaya_langganan)
+		fmt.Println("4. Tanggal Bayar:",A[i].tanggal_bayar.tanggal, A[i].tanggal_bayar.bulan, A[i].tanggal_bayar.tahun)
+
+		// Tambahkan satu bulan ke tanggal bayar bulan 
+		fmt.Println("5. Jatuh Tempo:",A[i].tanggal_bayar.tanggal, A[i].tanggal_bayar.bulan + 1, A[i].tanggal_bayar.tahun)
+
+		fmt.Println("6. Metode: ", A[i].metode)
+		fmt.Println("7. Status: ", A[i].status)
+		fmt.Println(" - - - - - - - - - - - - ")
+	}
+}
+
 // Fungsi untuk mencari indeks langganan dengan biaya termahal
 func biayaTermahal(A tabPelanggan, n int) int {
 	var i, max int
@@ -258,17 +266,7 @@ func biayaTermahal(A tabPelanggan, n int) int {
 	}
 	return max
 }
-// Prosedur untuk memperbarui tanggal jatuh tempo dengan menambah satu bulan ke tanggal tenggat
-func jatuhTempo(A *tabPelanggan, n int) {
-	var i int
-	for i = 0; i < n; i++ {
-		// Cek apakah tanggal tenggat valid (tanggal <= 30, bulan <= 12, tahun positif)
-		if A[i].tenggat.tanggal <= 30 && A[i].tenggat.bulan <= 12 && A[i].tenggat.tahun > 0 {
-			// Tambahkan satu bulan ke tanggal tenggat
-			A[i].tenggat.bulan = A[i].tenggat.bulan + 1
-		}
-	}
-}
+
 
 // Prosedur memberikan rekomendasi hemat dengan menyarankan langganan termahal untuk dihentikan
 func rekomendasiHemat(A *tabPelanggan, n int) {
@@ -310,10 +308,10 @@ func main() {
 		fmt.Println("2. Tampilkan Langganan")
 		fmt.Println("3. Ubah Langganan")
 		fmt.Println("4. Hapus Langganan")
-		fmt.Println("5. Cari layanan berdasarkan kategori") //sequential
-		fmt.Println("6. Urutkan Nama Layanan") //insertion sort
-		fmt.Println("7. Cari layanan setelah diurutkan") // binary search
-		fmt.Println("8. Urutkan Biaya") // selection sort
+		fmt.Println("5. Cari layanan berdasarkan kategori")      //sequential
+		fmt.Println("6. Urutkan Nama Layanan")                   //insertion sort
+		fmt.Println("7. Cari layanan setelah diurutkan")         // binary search
+		fmt.Println("8. Urutkan Biaya")                          // selection sort
 		fmt.Println("9. Cek Jatuh Tempo")
 		fmt.Println("10. Total Biaya Bulanan")
 		fmt.Println("11. Rekomendasi langganan hemat")
@@ -321,33 +319,33 @@ func main() {
 		fmt.Println(" - - - - - -  M E N U - - - - - - - ")
 		fmt.Print("Pilih menu: ")
 		fmt.Scan(&pilihan)   // Membaca input pilihan dari user
+
 		// Mengecek pilihan user dan memanggil fungsi sesuai menu yang dipilih
 		if pilihan == 1 {
-			tambahLangganan(&p, &n)          // Menambah data langganan baru
+			tambahLangganan(&p, &n)            // Menambah data langganan baru
 		} else if pilihan == 2 {
-			tampilkanLangganan(&p, &n)       // Menampilkan semua data langganan yang sudah ada
+			tampilkanLangganan(&p, &n)         // Menampilkan semua data langganan yang sudah ada
 		} else if pilihan == 3 {
-			ubahLangganan(&p, &n)            // Mengubah data langganan tertentu
+			ubahLangganan(&p, &n)              // Mengubah data langganan tertentu
 		} else if pilihan == 4 {
-			hapusLangganan(&p, &n)           // Menghapus data langganan tertentu
+			hapusLangganan(&p, &n)             // Menghapus data langganan tertentu
 		} else if pilihan == 5 {
-			carikategori(&p, &n, x)          // Mencari langganan berdasarkan kategori secara sequential
+			carikategori(&p, &n, x)            // Mencari langganan berdasarkan kategori secara sequential
 		} else if pilihan == 6 {
-			sortnama(&p, n)                  // Mengurutkan data langganan berdasarkan nama secara ascending
-			tampilkanLangganan(&p, &n)       // Menampilkan data yang sudah diurutkan
+			sortnama(&p, n)                    // Mengurutkan data langganan berdasarkan nama secara ascending
+			tampilkanLangganan(&p, &n)         // Menampilkan data yang sudah diurutkan
 		} else if pilihan == 7 {
-			sortnama(&p,n)                   // Mengurutkan data langganan berdasarkan nama secara ascending
-			binaryUrutkannama(&p,n)          // Mencari data langganan yang sudah terurut berdasarkan nama
+			sortnama(&p,n)                     // Mengurutkan data langganan berdasarkan nama secara ascending
+			binaryUrutkannama(&p,n)            // Mencari data langganan yang sudah terurut berdasarkan nama
 		} else if pilihan ==  8{
-			urutkanBiaya(&p, n)             // Mengurutkan data langganan berdasarkan biaya langganan secara ascending
-			tampilkanLangganan(&p, &n)       // Menampilkan data yang sudah diurutkan
-		} else if pilihan == 9 {
-			jatuhTempo(&p, n)               // Mengecek dan memperbarui tanggal jatuh tempo langganan
-			tampilkanLangganan(&p, &n)       // Menampilkan data setelah update jatuh tempo
+			urutkanBiaya(&p, n)                // Mengurutkan data langganan berdasarkan biaya langganan secara ascending
+			tampilkanLangganan(&p, &n)         // Menampilkan data yang sudah diurutkan
+		} else if pilihan == 9 {               
+			tampilkanTenggat(&p,&n)            // Mengecek dan memperbarui tanggal jatuh tempo langganan
 		} else if pilihan == 10 {
-			biayaBulanan(&p, &n)            // Menghitung total biaya langganan aktif per bulan
+			biayaBulanan(&p, &n)               // Menghitung total biaya langganan aktif per bulan
 		} else if pilihan == 11 {
-			rekomendasiHemat(&p, n)         // Memberikan rekomendasi langganan mana yang bisa dihentikan untuk menghemat biaya
+			rekomendasiHemat(&p, n)            // Memberikan rekomendasi langganan mana yang bisa dihentikan untuk menghemat biaya
 		} else if pilihan == 0 {
 			fmt.Println("Keluar dari program") // Pesan keluar program
 		} else {
