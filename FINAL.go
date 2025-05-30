@@ -249,10 +249,8 @@ func biayaBulanan(A *tabPelanggan, n *int) {
 // Fungsi untuk mencari indeks langganan dengan biaya termahal
 func biayaTermahal(A tabPelanggan, n int) int {
 	var i, max int
-	if n <= 1 {
-		return 1
-	}
-	max = 1
+	i = 1
+	max = 2
 	for i = 1; i < n; i++ {
 		if A[i].biaya_langganan > A[max].biaya_langganan && A[i].status == "Aktif" {
 			max = i
@@ -260,7 +258,6 @@ func biayaTermahal(A tabPelanggan, n int) int {
 	}
 	return max
 }
-
 // Prosedur untuk memperbarui tanggal jatuh tempo dengan menambah satu bulan ke tanggal tenggat
 func jatuhTempo(A *tabPelanggan, n int) {
 	var i int
