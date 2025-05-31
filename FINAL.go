@@ -36,13 +36,12 @@ func tambahLangganan(A *tabPelanggan, n *int) {
 	fmt.Scan(&A[*n].tanggal_bayar.tanggal, &A[*n].tanggal_bayar.bulan, &A[*n].tanggal_bayar.tahun)
 	
 	// Membaca metode pembayaran, dibuat demikian agar Metode dan Status terdapat pada line berbeda
-	fmt.Print("Metode: ")
-	fmt.Scanln()                          
-	fmt.Scanln(&A[*n].metode)            
+	fmt.Print("Metode: ")                         
+	fmt.Scan(&A[*n].metode)            
 	
 	// Membaca status langganan
 	fmt.Print("Status: ")
-	fmt.Scanln(&A[*n].status)
+	fmt.Scan(&A[*n].status)
 	
 	// Menambah jumlah langganan yang tersimpan
 	*n = *n + 1
